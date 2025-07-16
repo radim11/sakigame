@@ -1,0 +1,19 @@
+-*make player
+-*add platform
+-*add acceleration
+-*add collisions
+-*add the ability to jump
+-*add ducking
+-*fix max velocity
+-add double jump
+-add obstacles
+-implement either player horizontal velocity or obstacle scroll speed
+-implement damage on obstacle collision (eg temporary slow down)
+-add level generation
+-implement scoring
+-add high score saving
+-add proper sprites
+-add sfx
+-add music (optional)
+-fix duck jumping
+-
