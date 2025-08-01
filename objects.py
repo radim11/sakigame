@@ -4,7 +4,6 @@ from pygame.locals import *
 import sys
 
 vec = pg.math.Vector2
-FRIC = -0.12
 WIDTH = 800
 HEIGHT = 500
 maxvel = 20
@@ -19,6 +18,8 @@ class Player(pg.sprite.Sprite):
         self.pos = vec((150,400))
         self.vel = vec(0,0)
         self.acc = vec(0,0)
+        self.hasDoubleJump = False
+        self.isJumping = False
 
     def move(self):
         self.acc = vec(0,0.5)
@@ -41,20 +42,23 @@ class Player(pg.sprite.Sprite):
             if hit:
                 self.vel.y = 0
                 self.pos.y = hit[0].rect.top + 1
+                self.isJumping = False
 
     def jump(self):
-        #jump = True
         hit = pg.sprite.spritecollide(P1,platforms,False)
-        if hit: #or jump
+        if hit:
             self.vel.y = -12
+            self.hasDoubleJump = True
+            self.isJumping = True
+        elif not hit and self.hasDoubleJump:
+            self.vel.y = -12
+            self.hasDoubleJump = False
 
     def duck(self):
-        self.surf = pg.Surface((50,30))
-        self.surf.fill((78,205,0))
-        self.rect = self.surf.get_rect(center=(100, 460))
-        hit = pg.sprite.spritecollide(P1,platforms,False)
-        if not hit:
-            self.vel.y = maxvel
+        if not self.isJumping:
+            self.surf = pg.Surface((50,30))
+            self.surf.fill((78,205,0))
+            self.rect = self.surf.get_rect(center=(100, 460))
 
 class Platform(pg.sprite.Sprite):
     def __init__(self):
@@ -64,6 +68,11 @@ class Platform(pg.sprite.Sprite):
         self.rect = self.surf.get_rect(center=((WIDTH)/2,(HEIGHT)-30))
 
 class Obstacle(pg.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.surf = pg.Surface()
+
+class Decoration(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.surf = pg.Surface()
