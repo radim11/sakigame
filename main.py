@@ -17,10 +17,10 @@ while True:
             pg.quit()
             sys.exit()
         if event.type == pg.KEYDOWN:
-            if event.key == pg.K_UP:
-                objects.P1.jump()
             if event.key == pg.K_DOWN:
                 objects.P1.duck()
+            if event.key == pg.K_UP:
+                objects.P1.jump()
         if event.type == pg.KEYUP:
             if event.key == pg.K_DOWN:
                 objects.P1.idle()

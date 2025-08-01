@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
 
     def move(self):
         self.acc = vec(0,0.5)
-        self.acc.x += self.vel.x * FRIC
+        #self.acc.x += self.vel.x * FRIC
         if self.vel.y > maxvel:
             self.acc.y = 0
         self.vel += self.acc
