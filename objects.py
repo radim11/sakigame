@@ -6,7 +6,7 @@ import sys
 vec = pg.math.Vector2
 WIDTH = 800
 HEIGHT = 500
-maxvel = 20
+maxvel = 30
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
@@ -37,7 +37,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(100, 410))
 
     def update(self):
-        hit = pg.sprite.spritecollide(P1,platforms,False)
+        hit = pg.sprite.spritecollide(P1,platform,False)
         if P1.vel.y > 0:
             if hit:
                 self.vel.y = 0
@@ -45,16 +45,16 @@ class Player(pg.sprite.Sprite):
                 self.isJumping = False
 
     def jump(self):
-        hit = pg.sprite.spritecollide(P1,platforms,False)
+        self.isJumping = True
+        hit = pg.sprite.spritecollide(P1,platform,False)
         if hit:
             self.vel.y = -12
             self.hasDoubleJump = True
-            self.isJumping = True
         elif not hit and self.hasDoubleJump:
             self.vel.y = -12
             self.hasDoubleJump = False
 
-    def duck(self):
+    def slide(self):
         if not self.isJumping:
             self.surf = pg.Surface((50,30))
             self.surf.fill((78,205,0))
@@ -79,8 +79,8 @@ class Decoration(pg.sprite.Sprite):
 
 P1 = Player()
 PT1 = Platform()
-platforms = pg.sprite.Group()
-platforms.add(PT1)
+platform = pg.sprite.Group()
+platform.add(PT1)
 sprite_group = pg.sprite.Group()
 sprite_group.add(P1)
 sprite_group.add(PT1)
